@@ -5,6 +5,7 @@ REPO=builder16
 TOOLS=../../../tools/docker_shell ../../../tools/container-id
 
 build:
+	cp ${TOOLS} .
 	docker build -t $(USER)/$(REPO):$(VERSION) .
 
 run:

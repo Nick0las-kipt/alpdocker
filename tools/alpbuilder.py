@@ -10,7 +10,7 @@ import logging
 import pwd
 
 logging.basicConfig()
-logger = logging.getLogger('onlbuilder')
+logger = logging.getLogger('alpbuilder')
 logger.setLevel(logging.INFO)
 
 g_current_user = getpass.getuser()
@@ -18,11 +18,9 @@ g_current_uid  = os.getuid()
 g_timestamp = datetime.datetime.now().strftime("%Y-%m-%d.%H%M%S")
 
 g_builders = {
-   'default' : 1,
+   'default' : 16,
    'builders' : {
-      0  : ('2004-1', 'wasp/builder0:1.0'),
-      1  : ('2104-1', 'wasp/builder1:1.0'),
-      18  : ('1804-1', 'wasp/builder18:1.0'),
+      16  : ('1604-1', 'alpental/builder16:1.1'),
       },
 }
 
@@ -30,13 +28,13 @@ g_default_image_name = g_builders['builders'][g_builders['default']][1]
 g_default_container_name = "%s_%s" % (g_current_user, g_timestamp)
 g_default_user="%s:%s" % (g_current_user, g_current_uid)
 
-ap = argparse.ArgumentParser("ONL Docker Build")
+ap = argparse.ArgumentParser("ALP Docker Build")
 
 for v in reversed(sorted(g_builders['builders'].keys())):
    (n, i) = g_builders['builders'][v]
    ap.add_argument('--' + str(v), '-' + str(v),
                    '--' + n, '-' + n,
-                   help="Run the Debian %s (%s) image." % (v, n.capitalize()),
+                   help="Run the Ubuntu %s (%s) image." % (v, n.capitalize()),
                    action='store_const', const=i,
                    dest='image', default=g_default_image_name)
 

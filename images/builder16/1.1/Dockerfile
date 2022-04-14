@@ -17,11 +17,6 @@ RUN apt-get -y install sudo gawk wget git-core diffstat unzip texinfo \
 RUN aptitude install libssl-dev -y
 
 RUN curl https://storage.googleapis.com/git-repo-downloads/repo-1 > /usr/bin/repo
-RUN apt -y purge --auto-remove cmake
-RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | sudo apt-key add -
-RUN apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main'
-RUN apt -y install cmake
-
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python2 10
 RUN apt-get install -y cpio locales
 RUN locale-gen "en_US.UTF-8"
@@ -30,7 +25,14 @@ RUN /usr/sbin/update-ccache-symlinks
 
 COPY ./setup.sh /setup.sh
 COPY ./toolchain.tar /home/toolchain.tar
-COPY ./nhlos_build.sh /home/nhlos_build.sh
-COPY ./android_build.sh /home/android_build.sh
 
-ENTRYPOINT ["/setup.sh"]
+RUN /setup.sh
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+RUN sudo apt-get install git-lfs
+
+COPY docker_shell /bin/docker_shell
+COPY container-id /bin/container-id
+
+
+COPY ./nhlos_build.sh /bin/nhlos_build.sh
+COPY ./android_build.sh /bin/android_build.sh

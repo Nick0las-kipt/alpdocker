@@ -2,5 +2,21 @@
 # This script builds final container image
 # And startd it involving waspbuilder.py
 THIS_DIR=`pwd`/$(dirname $0)
-echo $THIS_DIR
-make -C ${THIS_DIR}/../images/builder16/1.1/
+CONTAINER_NAME=builder16
+CONTAINER_VERSION=1.1
+CONTAINER_PATH=${THIS_DIR}/../images/${CONTAINER_NAME}/${CONTAINER_VERSION}/
+TOOLCHAIN_FILE=${CONTAINER_PATH}/toolchain.tar
+IMAGE_NAME=alpental//${CONTAINER_NAME}:${CONTAINER_VERSION}
+
+trap "${THIS_DIR}/alpbuilder.py" EXIT 0
+
+if [ ! -r ${TOOLCHAIN_FILE} ]; then
+	echo "Toolcahin file $(realpath ${TOOLCHAIN_FILE} is missing)"
+	exit 1
+fi
+
+IMG=$(docker images | grep ${CONTAINER_NAME} | grep ${CONTAINER_VERSION} | awk '{print $3}' )
+LENGTH=${#IMG}
+if [ $LENGTH -lt 8 ] || [ "$1" == "-f" ]; then
+    make -C ${CONTAINER_PATH}
+fi
