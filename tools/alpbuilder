@@ -1,0 +1,6 @@
+#!/bin/bash
+# This script builds final container image
+# And startd it involving waspbuilder.py
+THIS_DIR=`pwd`/$(dirname $0)
+echo $THIS_DIR
+make -C ${THIS_DIR}/../images/builder16/1.1/
