@@ -11,7 +11,7 @@ IMAGE_NAME=alpental//${CONTAINER_NAME}:${CONTAINER_VERSION}
 trap "${THIS_DIR}/alpbuilder.py" EXIT 0
 
 if [ ! -r ${TOOLCHAIN_FILE} ]; then
-	echo "Toolcahin file $(realpath ${TOOLCHAIN_FILE} is missing)"
+	echo "Toolcahin file $(realpath ${TOOLCHAIN_FILE}) is missing"
 	exit 1
 fi
 
