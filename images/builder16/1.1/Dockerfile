@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 LABEL Sergey Nikolayenko <sergiy_nikolayenko6446@jabil.com>
 RUN apt-get update
 RUN echo -e "2\n105\n" | apt-get install tzdata
