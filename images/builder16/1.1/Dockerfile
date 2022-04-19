@@ -36,3 +36,4 @@ COPY container-id /bin/container-id
 
 COPY ./nhlos_build.sh /bin/nhlos_build.sh
 COPY ./android_build.sh /bin/android_build.sh
+RUN apt-get -y install vim mc nano iputils-ping bc
